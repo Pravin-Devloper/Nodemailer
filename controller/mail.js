@@ -19,7 +19,7 @@
            });
 
            let info = await transporter.sendMail({
-               from: 'testnepl123@gmail.com', // sender address
+               from: 'test@gmail.com', // sender address
                to: `to_email`, // list of receivers add comma onther mail id
                subject: `example`, 
                text: `${msg}`, 
