@@ -7,33 +7,33 @@
     SendMail: (req,res)=> {
 
         var msg = req.body.msg;
+     
+           async function main() {
 
-        async function main() {
+           let transporter = nodemailer.createTransport({
+               service:'gmail',
+               auth: {
+               user: '<your mail>', 
+               pass: 'scret code', 
+               },
+           });
 
-        let transporter = nodemailer.createTransport({
-            host: "smtp.gmail.com",
-            port: 465,
-            secure: true,
-            auth: {
-            user: '<your mail-id>', 
-            pass: '<mail passcode>', 
-            },
-        });
+           let info = await transporter.sendMail({
+               from: 'testnepl123@gmail.com', // sender address
+               to: `to_email`, // list of receivers add comma onther mail id
+               subject: `example`, 
+               text: `${msg}`, 
+               html: `<h1>${msg}</h1>`, 
+           });
 
-        let info = await transporter.sendMail({
-            from: '<your mail-id>', // sender address
-            to: "<receiver mail-id>", // list of receivers add comma onther mail id
-            subject: "Mail Test", 
-            text: `<h1>${msg}</h1>`, 
-            html: `<h1>${msg}</h1>`, 
-        });
+           transporter.close()
 
-        console.log("Message sent: %s", info.messageId);
-        res.json(info);
-        console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+           console.log("Message sent: %s", info.messageId);
+           console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
 
-        }
-        main().catch(console.error);
+           return info.messageId
+           }
+           main().catch(console.error);
 
     },
 
